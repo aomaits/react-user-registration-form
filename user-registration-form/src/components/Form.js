@@ -36,7 +36,7 @@ function Form() {
       if (inputFormKey === 'username') {
         usernameCheck(e);
       } if (inputFormKey === 'email') {
-        emailCheck();
+        emailCheck(e);
       } if (inputFormKey === 'password') {
         passwordCheck();
       }
@@ -44,21 +44,20 @@ function Form() {
   }
 
   const usernameCheck = (e) => {
-    // console.log('usernameCheck running')
     if (e.target.value.length < 6) {
-      // console.log("username too short")
       setUsernameLengthAlert('username too short')
     } else {
       setUsernameLengthAlert('')
-      // console.log("username not too short")
     }
-    //   console.log(e.target.value)
   }
-
-  const emailCheck = () => {
+  
+  // TODO - Check if email contains @ symbol
+  const emailCheck = (e) => {
+    console.log(e.target.value)
     console.log('emailCheck running')
   }
 
+  // TODO - Check if password contains 1 or more numbers
   const passwordCheck = () => {
     console.log('passwordCheck running')
   }
