@@ -87,13 +87,14 @@ function Form() {
     }
 
     if (isValid) {
-      setSuccessAlert('Success!');
+      callMockApi();
+      setSuccessAlert('Submitting...');
     }
   }
 
   const callMockApi = async () => {
     await mockSuccessApi();
-    console.log('done')
+    setSuccessAlert('Submission Success!')
   }
 
   return (
@@ -116,17 +117,3 @@ function Form() {
 }
 
 export default Form;
-// validate inputs / error messages
-
-
-/*
-
-Next Steps:
-
-1. Input validation
--If all above criteria is met, display a "Success" message in green below the submit button
-
-2. Mock success registration
--If all above criteria is met, upon user pressing submit there should be some indication of loading while the "api call" is being made (while the mockSuccessApi is processing)
--Once the "api call" is finished, the indication of loading should go away and a success message in green should display under the submit button
-*/
