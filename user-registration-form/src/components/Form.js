@@ -7,7 +7,6 @@ function Form() {
   const [usernameLengthAlert, setUsernameLengthAlert] = useState('');
   const [emailAtAlert, setEmailAtAlert] = useState('');
   const [passwordNumberAlert, setPasswordNumberAlert] = useState('');
-  // successAlert will be initialized as an empty string
   const [successAlert, setSuccessAlert] = useState('');
 
   const [inputFormValues, setInputFormValues] = useState({
