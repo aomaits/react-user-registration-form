@@ -7,6 +7,9 @@ form {
   align-items: center;
 }
 
+.alert {
+  color: red
+}
 
 input {
   padding: 0.5rem;
