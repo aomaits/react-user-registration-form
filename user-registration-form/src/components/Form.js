@@ -4,9 +4,9 @@ import mockSuccessApi from '../api/mockSuccessApi';
 
 
 function Form() {
-  const [usernameLengthAlert, setUsernameLengthAlert] = useState('')
-  const [emailAtAlert, setEmailAtAlert] = useState('')
-  const [passwordNumberAlert, setPasswordNumberAlert] = useState('')
+  const [usernameLengthAlert, setUsernameLengthAlert] = useState('');
+  const [emailAtAlert, setEmailAtAlert] = useState('');
+  const [passwordNumberAlert, setPasswordNumberAlert] = useState('');
 
   const [inputFormValues, setInputFormValues] = useState({
     username: '',
@@ -30,44 +30,53 @@ function Form() {
         [inputFormKey]: e.target.value
       });
 
-      //TODO Bad to pass around this event? 
-      if (inputFormKey === 'username') {
-        usernameCheck(e);
-      } if (inputFormKey === 'email') {
-        emailCheck(e);
-      } if (inputFormKey === 'password') {
-        passwordCheck(e);
+      //ChatGPT helped here. This is setting the state of each alert to an empty string once the user types in the corresponding field. 
+
+      switch (inputFormKey) {  
+        case 'username':
+          setUsernameLengthAlert('');
+          break;
+        case 'email':
+          setEmailAtAlert('');
+          break;
+        case 'password':
+          setPasswordNumberAlert('');
+          break;
+        default :
+          break;
       }
-    }
-  }
 
-  //TODO Could be done shorter using a ternary for the JSX? 
-  const usernameCheck = (e) => {
-    if (e.target.value.length < 6) {
-      setUsernameLengthAlert('username too short')
-    } else {
-      setUsernameLengthAlert('')
-    }
-  }
-
-  const emailCheck = (e) => {
-    if (e.target.value.includes('@')) {
-      setEmailAtAlert('');
-    } else {
-      setEmailAtAlert('Email field incomplete');
-    }
-  }
-
-  const passwordCheck = (e) => {
-    if (e.target.value.match(/\d+/)) {
-      setPasswordNumberAlert('');
-    } else {
-      setPasswordNumberAlert('Password must contain a number');
+      // Below option will remove ALL errors as soon as user starts typing, not just the corresponding error
+      
+      // if (inputFormKey) {
+      //   setUsernameLengthAlert('');
+      //   setEmailAtAlert('');
+      //   setPasswordNumberAlert('');
+      // }
     }
   }
 
   const formSubmit = (e) => {
     e.preventDefault()
+
+    if (e.target[0].value.length < 6) {
+      setUsernameLengthAlert('username too short')
+    } else {
+      setUsernameLengthAlert('')
+    }
+
+    // TODO - email form already checks for @ inclusion! 
+    if (e.target[1].value.includes('.com')) {
+      setEmailAtAlert('');
+    } else {
+      setEmailAtAlert('Email field incomplete');
+    }
+
+    if (e.target[2].value.match(/\d+/)) {
+      setPasswordNumberAlert('');
+    } else {
+      setPasswordNumberAlert('Password must contain a number');
+    }
   }
 
   const callMockApi = async () => {
@@ -102,7 +111,6 @@ export default Form;
 Next Steps:
 
 1. Input validation
--The error message should be red, it should appear below the submit button
 -Once the user starts typing again in any of the input fields, the error message should disappear
 -If all above criteria is met, display a "Success" message in green below the submit button
 
