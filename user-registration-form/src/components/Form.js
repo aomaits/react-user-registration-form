@@ -51,10 +51,12 @@ function Form() {
     }
   }
   
-  // TODO - Check if email contains @ symbol
   const emailCheck = (e) => {
-    console.log(e.target.value)
-    console.log('emailCheck running')
+    if (e.target.value.includes('@')) {
+      setEmailAtAlert('');
+    } else {
+      setEmailAtAlert('Email field incomplete');
+    }
   }
 
   // TODO - Check if password contains 1 or more numbers
