@@ -11,6 +11,11 @@ form {
   color: red
 }
 
+.success-alert {
+  color: green;
+  font-size: large;
+}
+
 input {
   padding: 0.5rem;
   margin: 1rem;

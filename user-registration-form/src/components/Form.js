@@ -7,6 +7,8 @@ function Form() {
   const [usernameLengthAlert, setUsernameLengthAlert] = useState('');
   const [emailAtAlert, setEmailAtAlert] = useState('');
   const [passwordNumberAlert, setPasswordNumberAlert] = useState('');
+  // successAlert will be initialized as an empty string
+  const [successAlert, setSuccessAlert] = useState('');
 
   const [inputFormValues, setInputFormValues] = useState({
     username: '',
@@ -46,8 +48,8 @@ function Form() {
           break;
       }
 
-      // Below option will remove ALL errors as soon as user starts typing, not just the corresponding error
-      
+      // Below option will remove ALL errors as soon as user starts typing, not just the corresponding error. I came up with this one. 
+
       // if (inputFormKey) {
       //   setUsernameLengthAlert('');
       //   setEmailAtAlert('');
@@ -59,23 +61,32 @@ function Form() {
   const formSubmit = (e) => {
     e.preventDefault()
 
+    let isValid = true; 
+
     if (e.target[0].value.length < 6) {
       setUsernameLengthAlert('username too short')
+      isValid = false;
     } else {
-      setUsernameLengthAlert('')
+      setUsernameLengthAlert('');
     }
 
     // TODO - email form already checks for @ inclusion! 
-    if (e.target[1].value.includes('.com')) {
-      setEmailAtAlert('');
-    } else {
+    if (!e.target[1].value.includes('.com')) {
       setEmailAtAlert('Email field incomplete');
+      isValid = false;
+    } else {
+      setEmailAtAlert('');
     }
 
-    if (e.target[2].value.match(/\d+/)) {
-      setPasswordNumberAlert('');
-    } else {
+    if (!e.target[2].value.match(/\d+/)) {
       setPasswordNumberAlert('Password must contain a number');
+      isValid  = false;
+    } else {
+      setPasswordNumberAlert('');
+    }
+
+    if (isValid) {
+      setSuccessAlert('Success!');
     }
   }
 
@@ -97,6 +108,7 @@ function Form() {
       <div class='alert'>{usernameLengthAlert}</div>
       <div class='alert'>{emailAtAlert}</div>
       <div class='alert'>{passwordNumberAlert}</div>
+      <div class='success-alert'>{successAlert}</div>
 
     </form>
   )
@@ -111,7 +123,6 @@ export default Form;
 Next Steps:
 
 1. Input validation
--Once the user starts typing again in any of the input fields, the error message should disappear
 -If all above criteria is met, display a "Success" message in green below the submit button
 
 2. Mock success registration
