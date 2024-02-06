@@ -61,11 +61,12 @@ function Form() {
   const formSubmit = (e) => {
     e.preventDefault()
 
+    //Chat GPT helped w/ the success message, I was partly there. Adding this function-scoped variable allowed me to check if there were zero alerts with creating a re-rendering loop
     let isValid = true; 
 
     if (e.target[0].value.length < 6) {
       setUsernameLengthAlert('username too short')
-      isValid = false;
+      isValid = false; 
     } else {
       setUsernameLengthAlert('');
     }
