@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
 import mockSuccessApi from '../api/mockSuccessApi';
 
 
 function Form() {
+
   const [usernameLengthAlert, setUsernameLengthAlert] = useState('');
   const [emailAtAlert, setEmailAtAlert] = useState('');
   const [passwordNumberAlert, setPasswordNumberAlert] = useState('');
   const [successAlert, setSuccessAlert] = useState('');
 
   const [inputFormValues, setInputFormValues] = useState({
-    username: '',
-    email: '',
+    username: {
+      value: '',
+      validationErrorMessage'',
+      validatorFn: (value) => {
+        value.length > 6
+      }
+    }, // then loop through the state to run each validator function and for each failure populate render the error message, then run the isValid check  
+    email: {
+      value: '',
+      validationErrorMessage'',
+      validatorFn: (value) => {
+        value.length > 6
+      }
+    },
     password: ''
   })
 
@@ -63,7 +75,7 @@ function Form() {
     //Chat GPT helped w/ the success message, I was partly there. Adding this function-scoped variable allowed me to check if there were zero alerts with creating a re-rendering loop
     let isValid = true; 
 
-    if (e.target[0].value.length < 6) {
+    if (inputFormValues.username.length < 6) {
       setUsernameLengthAlert('username too short')
       isValid = false; 
     } else {
@@ -71,14 +83,14 @@ function Form() {
     }
 
     // TODO - email form already checks for @ inclusion! 
-    if (!e.target[1].value.includes('.com')) {
+    if (!inputFormValues.email.includes('.com')) {
       setEmailAtAlert('Email field incomplete');
       isValid = false;
     } else {
       setEmailAtAlert('');
     }
 
-    if (!e.target[2].value.match(/\d+/)) {
+    if (!inputFormValues.password.match(/\d+/)) {
       setPasswordNumberAlert('Password must contain a number');
       isValid  = false;
     } else {
